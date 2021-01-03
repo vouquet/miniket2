@@ -4,12 +4,12 @@ miniquet2
 * vouquet の小さい版。mini vouquet
 	* [vouquet](https://github.com/vouquet/vouquet) の 取引システムのみ分離した仕組み
 	* 取引ロジックの評価などを独立して行う事が目的の仕組み
-* miniquet(miniket) は、vouquet開始きっかけのプログラム名。本仕組みは初版だが、2
-* 現在は、gmo coin飲みに対応
+* miniquet は、vouquet開始きっかけのプログラム名。本仕組みは初版だが、2
+* 現在は、gmo coinに対応
 
 #### Setup
 
-* `~/miniket`等で configファイルを用意する
+* `~/miniquet2`等で configファイルを用意する
 	```
 	ApiKey = "<your api key>"
 	SercretKey = "<your secret key>"
@@ -56,3 +56,27 @@ user@host:~$ miniquet2 [-c <config path>] [-r <record storage path>]
 ### Bug report
 
 * [Issueの作成](https://github.com/vouquet/miniquet2/issues/new) してください
+
+### Setps2Release
+
+1. sourceの取得
+	```
+	git checkout master
+	git checkout -b release/0.0.1
+	```
+2. vendoring
+	```
+	cd ./docker
+	make run godep; make stop
+	```
+	* sshが直接通らない構成にしてるなら下記でライブラリを取得する
+		```
+		cd src/go/src/miniquet2/vendor/github.com/vouquet
+		git clone git@github.com:vouquet/brain.git
+		```
+3. build
+	```
+	cd ./docker
+	make run gobuild; make stop
+	make clean
+	```
