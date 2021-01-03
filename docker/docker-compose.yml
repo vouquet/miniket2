@@ -1,0 +1,8 @@
+version: '3'
+services:
+    dev-go-miniket:
+        build: ./dev-go-miniket
+        user: "${CURRENT_UID}:${CURRENT_GID}"
+        tty: true
+        volumes:
+            - ../src/go:/go/src
