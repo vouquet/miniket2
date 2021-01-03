@@ -1,4 +1,4 @@
-package main
+package miniquet
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 
 import (
 	"github.com/google/uuid"
-	"github.com/hinoshiba/go-gmo-coin/gomocoin"
+	"github.com/vouquet/go-gmo-coin/gomocoin"
 )
 
 type Trader struct {//TODO: Upgrade2interface

@@ -8,7 +8,7 @@ import (
 )
 
 import (
-	"github.com/hinoshiba/go-gmo-coin/gomocoin"
+	"github.com/vouquet/go-gmo-coin/gomocoin"
 )
 
 type StatusModel struct {

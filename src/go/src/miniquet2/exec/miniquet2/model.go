@@ -9,7 +9,11 @@ import (
 
 import (
 	"github.com/nsf/termbox-go"
-	"github.com/hinoshiba/go-gmo-coin/gomocoin"
+	"github.com/vouquet/go-gmo-coin/gomocoin"
+)
+
+import (
+	"miniquet2/miniquet"
 )
 
 type Message struct {
@@ -260,11 +264,11 @@ func (self *Model) run_operator(com_ch chan string) {
 	}
 }
 
-func (self *Model) AddTrader(tr *Trader) error {
+func (self *Model) AddTrader(tr *miniquet.Trader) error {
 	return self.m_pg.Add(tr)
 }
 
-func (self *Model) RemoveTrader(tr *Trader) error {
+func (self *Model) RemoveTrader(tr *miniquet.Trader) error {
 	return self.m_pg.Remove(tr)
 }
 

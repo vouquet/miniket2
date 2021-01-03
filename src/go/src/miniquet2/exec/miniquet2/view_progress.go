@@ -10,6 +10,10 @@ import (
 	"github.com/nsf/termbox-go"
 )
 
+import (
+	"miniquet2/miniquet"
+)
+
 type ProgressViewLayer struct {
 	ViewLayerBase
 }
@@ -20,7 +24,7 @@ func NewProgressViewLayer(strach_factor int) *ProgressViewLayer {
 	}
 }
 
-func (self *ProgressViewLayer) SetValues(trs map[string]*Trader) {
+func (self *ProgressViewLayer) SetValues(trs map[string]*miniquet.Trader) {
 	self.mtx.Lock()
 	defer self.mtx.Unlock()
 	defer self.call_flusher()

@@ -5,21 +5,25 @@ import (
 	"sync"
 )
 
+import (
+	"miniquet2/miniquet"
+)
+
 type ProgressModel struct {
-	view_handler func(map[string]*Trader)
-	traders      map[string]*Trader
+	view_handler func(map[string]*miniquet.Trader)
+	traders      map[string]*miniquet.Trader
 
 	mtx  *sync.Mutex
 }
 
 func NewProgressModel() *ProgressModel {
 	return &ProgressModel{
-		traders:make(map[string]*Trader, 0),
+		traders:make(map[string]*miniquet.Trader, 0),
 		mtx:new(sync.Mutex),
 	}
 }
 
-func (self *ProgressModel) ViewHandler(f func(map[string]*Trader)) {
+func (self *ProgressModel) ViewHandler(f func(map[string]*miniquet.Trader)) {
 	self.mtx.Lock()
 	defer self.mtx.Unlock()
 
@@ -33,7 +37,7 @@ func (self *ProgressModel) Publish() {
 	self.publish()
 }
 
-func (self *ProgressModel) call_view_handler(ts map[string]*Trader) {
+func (self *ProgressModel) call_view_handler(ts map[string]*miniquet.Trader) {
 	if self.view_handler == nil {
 		return
 	}
@@ -44,7 +48,7 @@ func (self *ProgressModel) publish() {
 	self.call_view_handler(self.traders)
 }
 
-func (self *ProgressModel) Add(n_tr *Trader) error {
+func (self *ProgressModel) Add(n_tr *miniquet.Trader) error {
 	self.mtx.Lock()
 	defer self.mtx.Unlock()
 
@@ -57,7 +61,7 @@ func (self *ProgressModel) Add(n_tr *Trader) error {
 	return nil
 }
 
-func (self *ProgressModel) Remove(r_tr *Trader) error {
+func (self *ProgressModel) Remove(r_tr *miniquet.Trader) error {
 	self.mtx.Lock()
 	defer self.mtx.Unlock()
 

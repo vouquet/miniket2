@@ -14,12 +14,17 @@ import (
 )
 
 import (
-	"github.com/hinoshiba/go-gmo-coin/gomocoin"
+	"github.com/vouquet/go-gmo-coin/gomocoin"
 	"github.com/BurntSushi/toml"
+	"github.com/vouquet/brain"
+)
+
+import (
+	"miniquet2/miniquet"
 )
 
 const (
-	MiniketName string = "miniquet2 v0.0.1.a51d578d5d291efb5af45a32a158fe6c4560146b"
+	MiniketName string = "miniquet2 v0.0.1"
 )
 
 var (
@@ -30,9 +35,9 @@ var (
 type Miniket2 struct {
 	m   *Model
 
-	trs  map[string]*Trader
+	trs  map[string]*miniquet.Trader
 	shop *gomocoin.GoMOcoin
-	st   *Storage
+	st   *miniquet.Storage
 }
 
 func NewMiniket2(api string, secret string, s_path string) (*Miniket2, error) {
@@ -46,14 +51,14 @@ func NewMiniket2(api string, secret string, s_path string) (*Miniket2, error) {
 		return nil, err
 	}
 
-	storage, err := OpenStorage(s_path, nil)
+	storage, err := miniquet.OpenStorage(s_path, nil)
 	if err != nil {
 		return nil, err
 	}
 
 	self := &Miniket2{
 		m:m,
-		trs: make(map[string]*Trader),
+		trs: make(map[string]*miniquet.Trader),
 		shop: gmocoin,
 		st: storage,
 	}
@@ -145,12 +150,12 @@ func (self *Miniket2) loadStorage() error {
 }
 
 func (self *Miniket2) buildTrader() error {
-	a_tr := NewTrader("alice", "Trade with a difference of 0.2 point.", self.shop, self.st)
-	a_tr.SetCheckFunc(alice)
+	a_tr := miniquet.NewTrader("alice", "Trade with a difference of 0.2 point.", self.shop, self.st)
+	a_tr.SetCheckFunc(brain.Alice)
 	self.trs["alice"] = a_tr
 
-	j_tr := NewTrader("john", "Trade with a difference of 1 point.", self.shop, self.st)
-	j_tr.SetCheckFunc(john)
+	j_tr := miniquet.NewTrader("john", "Trade with a difference of 1 point.", self.shop, self.st)
+	j_tr.SetCheckFunc(brain.John)
 	self.trs["john"] = j_tr
 
 	for _, tr := range self.trs {
@@ -231,11 +236,6 @@ func (self *Miniket2) buildCommand() error {
 	})
 
 	return nil
-}
-
-type Logger interface {
-	WriteMsgLog(string, ...interface{})
-	WriteErrLog(string, ...interface{})
 }
 
 func die(s string, msg ...interface{}) {
