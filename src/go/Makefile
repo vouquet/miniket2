@@ -1,4 +1,4 @@
-PRJ=src/miniket
+PRJ=src/miniquet2
 
 GOENV=GOPATH=$(CURDIR)
 GOCMD=$(GOENV) go
@@ -15,11 +15,11 @@ BINS := $(shell test -d ./bin && find ./bin/ -type f)
 all: test build ## test & build
 
 build: $(SRCS) ## build to linux binary
-	$(GOBUILD) $(BUILD_FLGS) ./src/miniket/exec/...
+	$(GOBUILD) $(BUILD_FLGS) ./src/miniquet2/exec/...
 
 .PHONY: test
 test: ## run test
-	$(GOTEST) -count=1 ./src/miniket/...
+	$(GOTEST) -count=1 ./src/miniquet2/...
 
 .PHONY: clean
 clean: $(BINS) ## cleanup
@@ -28,9 +28,9 @@ clean: $(BINS) ## cleanup
 
 xross-build: build build-windows build-mac ## build to windows and mac and linux
 build-windows: ## build to windows binary
-	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 $(GOBUILD) $(BUILD_FLGS) ./src/miniket/exec/...
+	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 $(GOBUILD) $(BUILD_FLGS) ./src/miniquet2/exec/...
 build-mac: ## build to mac binary
-	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 $(GOBUILD) $(BUILD_FLGS) ./src/miniket/exec/...
+	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 $(GOBUILD) $(BUILD_FLGS) ./src/miniquet2/exec/...
 
 dep: $(CURDIR)/$(PRJ)/Gopkg.toml ## dep ensure
 	cd $(CURDIR)/$(PRJ); $(GODEP) ensure

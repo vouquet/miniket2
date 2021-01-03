@@ -1,7 +1,7 @@
 version: '3'
 services:
-    dev-go-miniket:
-        build: ./dev-go-miniket
+    dev-go-miniquet:
+        build: ./dev-go-miniquet
         user: "${CURRENT_UID}:${CURRENT_GID}"
         tty: true
         volumes:

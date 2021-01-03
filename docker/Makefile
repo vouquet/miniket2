@@ -1,4 +1,4 @@
-GOLANG=dev-go-miniket
+GOLANG=dev-go-miniquet
 DC=docker-compose
 
 CURRENT_UID := $(shell id -u)
