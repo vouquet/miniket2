@@ -1,5 +1,5 @@
 /src/go/bin/
 *.swp
 /src/go/pkg/
-/src/go/src/miniket/vendor/
-/src/go/src/miniket/Gopkg.lock
+/src/go/src/miniquet2/vendor/
+/src/go/src/miniquet2/Gopkg.lock
