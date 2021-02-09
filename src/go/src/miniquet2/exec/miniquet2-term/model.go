@@ -9,7 +9,7 @@ import (
 
 import (
 	"github.com/nsf/termbox-go"
-	"github.com/vouquet/go-gmo-coin/gomocoin"
+	"github.com/vouquet/shop"
 )
 
 import (
@@ -354,7 +354,7 @@ func (self *Model) WriteMsgLog(s string, msg ...interface{}) {
 	self.m_log.WriteMsgLog(s, msg...)
 }
 
-func (self *Model) UpdateStatus(rates map[string]*gomocoin.RateData) {
+func (self *Model) UpdateStatus(rates map[string]shop.Rate) {
 	self.m_st.UpdateStatus(rates)
 }
 

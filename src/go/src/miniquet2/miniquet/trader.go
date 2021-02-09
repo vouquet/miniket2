@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"sync"
 	"time"
-	"strconv"
 )
 
 import (
 	"github.com/google/uuid"
+	"github.com/vouquet/shop"
 	"github.com/vouquet/go-gmo-coin/gomocoin"
 )
 
@@ -144,7 +144,7 @@ func (self *Trader) SetCheckFunc(f func(*Entry, float64, float64) bool) {
 	self.check = f
 }
 
-func (self *Trader) Do(log Logger, rates map[string]*gomocoin.RateData) {
+func (self *Trader) Do(log Logger, rates map[string]shop.Rate) {
 	self.mtx.Lock()
 	defer self.mtx.Unlock()
 
@@ -160,22 +160,11 @@ func (self *Trader) Do(log Logger, rates map[string]*gomocoin.RateData) {
 			continue
 		}
 
-		ask, err := strconv.ParseFloat(rate.Ask, 64)
-		if err != nil {
-			log.WriteErrLog("Failed convert to float from rate(%s). : '%s'", entry.Symbol, err)
-			continue
-		}
-		bid, err := strconv.ParseFloat(rate.Bid, 64)
-		if err != nil {
-			log.WriteErrLog("Failed convert to float from rate(%s). : '%s'", entry.Symbol, err)
+		if !self.check(entry, rate.Ask(), rate.Bid()) {
 			continue
 		}
 
-		if !self.check(entry, ask, bid) {
-			continue
-		}
-
-		o_id, err := self.do(entry, ask, bid)
+		o_id, err := self.do(entry, rate.Ask(), rate.Bid())
 		if err != nil {
 			log.WriteErrLog("Failed the trade: '%s'", err)
 			continue

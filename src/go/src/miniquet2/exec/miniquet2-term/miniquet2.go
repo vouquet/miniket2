@@ -113,7 +113,7 @@ func (self *Miniket2) run_trader(wg *sync.WaitGroup) {
 				return
 			case <- t.C:
 				go func() {
-					rates, err := self.shop.UpdateRate()
+					rates, err := self.shop.GetRate()
 					if err != nil {
 						self.m.WriteErrLog("cannot update gmocoin: %s", err)
 						return

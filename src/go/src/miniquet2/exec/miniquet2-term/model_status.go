@@ -3,12 +3,11 @@ package main
 import (
 	"sync"
 	"time"
-	"strconv"
 	"strings"
 )
 
 import (
-	"github.com/vouquet/go-gmo-coin/gomocoin"
+	"github.com/vouquet/shop"
 )
 
 type StatusModel struct {
@@ -48,7 +47,7 @@ func (self *StatusModel) Publish() {
 	self.call_view_handler(self.before)
 }
 
-func (self *StatusModel) UpdateStatus(rds map[string]*gomocoin.RateData) {
+func (self *StatusModel) UpdateStatus(rds map[string]shop.Rate) {
 	self.mtx.Lock()
 	defer self.mtx.Unlock()
 
@@ -62,24 +61,24 @@ func (self *StatusModel) UpdateStatus(rds map[string]*gomocoin.RateData) {
 
 	rates := make(map[string]*Rate)
 	for _, rd := range rds {
-		if strings.Contains(rd.Symbol, "_JPY") {
+		if strings.Contains(rd.Symbol(), "_JPY") {
 			continue
 		}
 
-		r, ok := b_rs[rd.Symbol]
+		r, ok := b_rs[rd.Symbol()]
 		if !ok {
 			rate, err := NewRate(rd, nil)
 			if err != nil {
 				continue
 			}
-			rates[rd.Symbol] = rate
+			rates[rd.Symbol()] = rate
 			continue
 		}
 		rate, err := NewRate(rd, r)
 		if err != nil {
 			continue
 		}
-		rates[rd.Symbol] = rate
+		rates[rd.Symbol()] = rate
 	}
 
 	n_sv := &StatusValue{
@@ -125,13 +124,10 @@ type Rate struct {
 	avg_month float64
 }
 
-func NewRate(rd *gomocoin.RateData, before *Rate) (*Rate, error) {
+func NewRate(r shop.Rate, before *Rate) (*Rate, error) {
 	ask_down := false
 	ask_up := false
-	ask, err := strconv.ParseFloat(rd.Ask, 64)
-	if err != nil {
-		return nil, err
-	}
+	ask := r.Ask()
 	if before != nil {
 		if before.Ask() != ask {
 			if before.Ask() < ask {
@@ -144,10 +140,7 @@ func NewRate(rd *gomocoin.RateData, before *Rate) (*Rate, error) {
 
 	bid_down := false
 	bid_up := false
-	bid, err := strconv.ParseFloat(rd.Bid, 64)
-	if err != nil {
-		return nil, err
-	}
+	bid := r.Bid()
 	if before != nil {
 		if before.Bid() != bid {
 			if before.Bid() < bid {
@@ -159,7 +152,7 @@ func NewRate(rd *gomocoin.RateData, before *Rate) (*Rate, error) {
 	}
 
 	return &Rate{
-		symbol: rd.Symbol,
+		symbol: r.Symbol(),
 		ask: ask,
 		ask_up: ask_up,
 		ask_down: ask_down,
