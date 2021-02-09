@@ -15,7 +15,6 @@ import (
 
 import (
 	"github.com/vouquet/go-gmo-coin/gomocoin"
-	"github.com/BurntSushi/toml"
 	"github.com/vouquet/brain"
 )
 
@@ -24,12 +23,12 @@ import (
 )
 
 const (
-	MiniketName string = "miniquet2 v0.0.1"
+	MiniketName string = "miniquet2-term v0.0.1"
 )
 
 var (
 	StoragePath  string
-	Conf         *Config
+	Conf         *miniquet.Config
 )
 
 type Miniket2 struct {
@@ -243,21 +242,6 @@ func die(s string, msg ...interface{}) {
 	os.Exit(1)
 }
 
-type Config struct {
-	ApiKey string
-	SecretKey string
-}
-
-func loadConfig(path string) (*Config, error) {
-	fpath := filepath.Clean(path)
-
-	var conf Config
-	if _, err := toml.DecodeFile(fpath, &conf); err != nil {
-		return nil, err
-	}
-	return &conf, nil
-}
-
 func init() {
 	var c_path string
 	var r_path string
@@ -280,7 +264,7 @@ func init() {
 		c_path = usr.HomeDir + "/.miniquet2"
 	}
 
-	cfg, err := loadConfig(filepath.Clean(c_path))
+	cfg, err := miniquet.LoadConfig(filepath.Clean(c_path))
 	if err != nil {
 		die("cannot load a config: %s", err)
 	}
