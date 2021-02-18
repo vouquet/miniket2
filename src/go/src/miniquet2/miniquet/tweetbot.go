@@ -4,7 +4,7 @@ package miniquet
 
 import (
 	"io"
-	"io/ioutil"
+//	"io/ioutil"
 	"fmt"
 	"net/http"
 	"net/url"
