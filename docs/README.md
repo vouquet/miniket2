@@ -22,6 +22,7 @@ miniquet2
 ### miniquet2
 
 * 完全自動取引ツールです。仮想通貨のレバレッジ自動取引をおこないます
+* [@bitcoin20210208](https://twitter.com/bitcoin20210208) で、取引内容を共有しています
 
 ```
 user@host:~$ miniquet2 [-c <config path>]
