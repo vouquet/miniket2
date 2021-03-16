@@ -19,8 +19,21 @@ miniquet2
 
 ### Exec
 
+### miniquet2
+
+* 完全自動取引ツールです。仮想通貨のレバレッジ自動取引をおこないます
+
 ```
-user@host:~$ miniquet2 [-c <config path>] [-r <record storage path>]
+user@host:~$ miniquet2 [-c <config path>]
+```
+
+
+### miniquet2-term
+
+* 半自動取引ツールです。現物取引のエントリを手動作成し、その取引を基準に自動取引を行います
+
+```
+user@host:~$ miniquet2-term [-c <config path>] [-r <record storage path>]
 ```
 
 ![view.png](./img/view.png)
