@@ -24,6 +24,9 @@
 #   go-tests = true
 #   unused-packages = true
 
+[[constraint]]
+  name = "github.com/vouquet/go-gmo-coin"
+  version = "0.0.2"
 
 [[constraint]]
   name = "github.com/syndtr/goleveldb"
