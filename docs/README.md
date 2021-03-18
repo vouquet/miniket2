@@ -1,6 +1,10 @@
 miniquet2
 ===
 
+* miniquet2の開発は終了。完全自動取引ツールのminiquet2は、[vouquet/vouquet](https://github.com/vouquet/vouquet) に統一されました
+* 半自動取引のminiquet2-term の統一状態は、[こちら](https://github.com/vouquet/vouquet/issues/15) を追いかけてください
+
+---
 * vouquet の小さい版。mini vouquet
 	* [vouquet](https://github.com/vouquet/vouquet) の 取引システムのみ分離した仕組み
 	* 取引ロジックの評価などを独立して行う事が目的の仕組み
@@ -22,7 +26,6 @@ miniquet2
 ### miniquet2
 
 * 完全自動取引ツールです。仮想通貨のレバレッジ自動取引をおこないます
-* [@bitcoin20210208](https://twitter.com/bitcoin20210208) で、取引内容を共有しています
 * バイナリの公開はありません
 
 ```
